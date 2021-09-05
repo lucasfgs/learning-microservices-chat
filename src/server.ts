@@ -1,6 +1,7 @@
-import { run } from './infra/http/app'
+import { run } from './infra/app'
 
 (async () => {
-  const app = await run()
-  app.listen(process.env.SERVER_PORT, () => console.log(`Server listening at port ${process.env.SERVER_PORT}`))
+  const server = await run()
+  server.listen(process.env.SERVER_PORT)
+  server.on('listening', () => console.log(`Server listening at port ${process.env.SERVER_PORT}`))
 })()
