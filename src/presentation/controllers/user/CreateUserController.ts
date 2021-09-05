@@ -14,14 +14,9 @@ export class CreateUserController implements Controller {
   async handle (request: HttpRequest<IUser>): Promise<HttpResponse<IUser>> {
     this.validateRequest(request)
 
-    const { name, email, password, role } = request.body
+    const { name } = request.body
 
-    const user = await this.user.create({
-      name,
-      email,
-      password,
-      role
-    })
+    const user = await this.user.create(name)
 
     return await this.presenter.response(user)
   }
@@ -29,10 +24,7 @@ export class CreateUserController implements Controller {
   private validateRequest (request: HttpRequest<IUser>) {
     if (
       !objectKeyExists(request, 'body') ||
-      !objectKeyExists(request.body, 'email') ||
-      !objectKeyExists(request.body, 'name') ||
-      !objectKeyExists(request.body, 'password') ||
-      !objectKeyExists(request.body, 'role')
+      !objectKeyExists(request.body, 'name')
     ) {
       throw new RequestValidationError('Invalid request')
     }

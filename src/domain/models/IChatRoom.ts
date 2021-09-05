@@ -1,5 +1,5 @@
 
-export interface ChatRoom {
+export interface IChatRoom {
     _id?: string,
     userIds: Array<string>,
     type: String,

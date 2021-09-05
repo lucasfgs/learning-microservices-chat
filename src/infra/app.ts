@@ -8,6 +8,7 @@ import { createConnection } from './database/mongoose'
 import { setupGlobalMiddlewares } from './http/setup/setupGlobalMIddlewares'
 import { setupErrorHandler } from './http/setup/setupErrorHandler'
 import { setupWebsocket } from './http/setup/setupWebsocket'
+import { setupRoutes } from './http/setup/setupRoutes'
 
 export async function run (): Promise<Server> {
   await createConnection()
@@ -15,7 +16,7 @@ export async function run (): Promise<Server> {
   const server = http.createServer(app)
 
   setupGlobalMiddlewares(app)
-  // setupRoutes(app)
+  setupRoutes(app)
   setupErrorHandler(app)
   setupWebsocket(server)
 

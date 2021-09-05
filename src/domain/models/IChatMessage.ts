@@ -13,3 +13,9 @@ export interface IChatMessage {
     readByRecipients: IReadByRecipient[]
 
 }
+
+export interface ICreateChatMessage {
+    room: string,
+    message: string,
+    postedByUser: string,
+}
