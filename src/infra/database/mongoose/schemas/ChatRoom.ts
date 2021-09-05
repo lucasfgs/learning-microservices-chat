@@ -1,9 +1,16 @@
 
 import { RepositoryError } from '@application/errors/RepositoryError'
-import mongoose, { Schema } from 'mongoose'
+import { IChatRoom, TInitiateChatRoomResponse } from '@domain/models/IChatRoom'
+import mongoose, { Model, Schema } from 'mongoose'
 import { v4 as uuid } from 'uuid'
 
-export const chatRoomSchema = new Schema(
+interface IChatRoomModel extends Model<IChatRoom> {
+  initiateChat(userIds: string[], chatInitiator: string): Promise<TInitiateChatRoomResponse>
+  getChatRoomsByUserId(userId: string): Promise<IChatRoom[]>
+  getChatRoomByRoomId(roomId: string): Promise<IChatRoom[]>
+}
+
+export const chatRoomSchema = new Schema<IChatRoom, IChatRoomModel>(
   {
     _id: {
       type: String,
@@ -48,32 +55,28 @@ chatRoomSchema.statics.getChatRoomByRoomId = async function (roomId) {
 /**
  * @param {Array} userIds - array of strings of userIds
  * @param {String} chatInitiator - user who initiated the chat
- * @param {CHAT_ROOM_TYPES} type
  */
-chatRoomSchema.statics.initiateChat = async function (userIds, type, chatInitiator) {
+chatRoomSchema.statics.initiateChat = async function (userIds, chatInitiator) {
   try {
     const availableRoom = await this.findOne({
       userIds: {
         $size: userIds.length,
         $all: [...userIds]
-      },
-      type
+      }
     })
     if (availableRoom) {
       return {
         isNew: false,
         message: 'retrieving an old chat room',
-        chatRoomId: availableRoom._doc._id,
-        type: availableRoom._doc.type
+        chatRoomId: availableRoom._id
       }
     }
 
-    const newRoom = await this.create({ userIds, type, chatInitiator })
+    const newRoom = await this.create({ userIds, chatInitiator })
     return {
       isNew: true,
       message: 'creating a new chatroom',
-      chatRoomId: newRoom._doc._id,
-      type: newRoom._doc.type
+      chatRoomId: newRoom._id
     }
   } catch (error) {
     console.log('error on start chat method', error)
@@ -81,4 +84,4 @@ chatRoomSchema.statics.initiateChat = async function (userIds, type, chatInitiat
   }
 }
 
-export default mongoose.model('ChatRoom', chatRoomSchema)
+export const ChatRoomModel = mongoose.model('ChatRoom', chatRoomSchema)

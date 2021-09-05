@@ -1,16 +1,16 @@
-import { IUserRepository } from '@domain/repositories/IUserRepository'
-import { IDeleteUserUseCase } from '@domain/useCases/user/IDeleteUserUseCase'
 import { ValidationComposite } from '@application/protocols/validation/ValidationComposite'
+import { UserModel } from '@infra/database/mongoose/schemas/User'
+import { IDeleteUserUseCase } from '@domain/useCases/user/IDeleteUserUseCase'
 
 export class DeleteUserUseCase implements IDeleteUserUseCase {
-  constructor (private readonly repository: IUserRepository, private readonly validation: ValidationComposite<{ id: number}>) {
-    this.repository = repository
-    this.validation = validation
-  }
+  constructor (
+    private readonly repository: typeof UserModel,
+     private readonly validation: ValidationComposite<string>
+  ) {}
 
-  async delete (id: number): Promise<void> {
-    await this.validation.validate({ id })
+  async delete (id: string): Promise<void> {
+    await this.validation.validate(id)
 
-    await this.repository.delete(id)
+    return await this.repository.deleteByUserById(id)
   }
 }

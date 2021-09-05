@@ -11,9 +11,7 @@ export class FindAllUsersController implements Controller {
   }
 
   async handle (request: TGenericFilterRequest): Promise<HttpResponse<IUser[]>> {
-    const { order, limit, offset } = request.query
-
-    const user = await this.user.findAll({ order, limit, offset })
+    const user = await this.user.findAll()
 
     return await this.presenter.response(user)
   }

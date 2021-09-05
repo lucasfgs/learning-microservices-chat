@@ -3,10 +3,6 @@ import { v4 as uuid } from 'uuid'
 
 import { RepositoryError } from '@application/errors/RepositoryError'
 
-export const MESSAGE_TYPES = {
-  TYPE_TEXT: 'text'
-}
-
 export const readByRecipientSchema = new Schema(
   {
     _id: false as Boolean,
@@ -29,10 +25,6 @@ export const chatMessageSchema = new Schema(
     },
     chatRoomId: String,
     message: Schema.Types.Mixed,
-    type: {
-      type: String,
-      default: () => MESSAGE_TYPES.TYPE_TEXT
-    },
     postedByUser: String,
     readByRecipients: [readByRecipientSchema]
   },
@@ -94,7 +86,6 @@ chatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
           postId: { $last: '$_id' },
           chatRoomId: { $last: '$chatRoomInfo._id' },
           message: { $last: '$message' },
-          type: { $last: '$type' },
           postedByUser: { $last: '$postedByUser' },
           readByRecipients: { $last: '$readByRecipients' },
           chatRoomInfo: { $addToSet: '$chatRoomInfo.userProfile' },
@@ -178,7 +169,6 @@ chatMessageSchema.statics.getRecentConversation = async function (chatRoomIds, o
           messageId: { $last: '$_id' },
           chatRoomId: { $last: '$chatRoomId' },
           message: { $last: '$message' },
-          type: { $last: '$type' },
           postedByUser: { $last: '$postedByUser' },
           createdAt: { $last: '$createdAt' },
           readByRecipients: { $last: '$readByRecipients' }
@@ -234,7 +224,6 @@ chatMessageSchema.statics.getRecentConversation = async function (chatRoomIds, o
           messageId: { $last: '$messageId' },
           chatRoomId: { $last: '$chatRoomId' },
           message: { $last: '$message' },
-          type: { $last: '$type' },
           postedByUser: { $last: '$postedByUser' },
           readByRecipients: { $addToSet: '$readByRecipients' },
           roomInfo: { $addToSet: '$roomInfo.userProfile' },

@@ -6,16 +6,14 @@ import { GenericCreatedResponse } from '@presentation/responses/GenericCreatedRe
 import { UserModel } from '@infra/database/mongoose/schemas/User'
 
 export const createUserFactory = () => {
-  const userValidation = new UserRequiredFieldsValidation()
+  const validation = new UserRequiredFieldsValidation()
 
-  const createUserUseCase = new CreateUserUseCase(UserModel, userValidation)
+  const useCase = new CreateUserUseCase(UserModel, validation)
 
-  const createUserPresenter = new GenericCreatedResponse<IUser>()
-  const createUserController = new CreateUserController(createUserUseCase, createUserPresenter)
+  const presenter = new GenericCreatedResponse<IUser>()
+  const createController = new CreateUserController(useCase, presenter)
 
   return {
-    createUserUseCase,
-    createUserPresenter,
-    createUserController
+    createController
   }
 }

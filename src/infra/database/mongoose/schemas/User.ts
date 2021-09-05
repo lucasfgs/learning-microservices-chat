@@ -9,7 +9,7 @@ interface IUserModel extends Model<IUser> {
   createUser(name: string): Promise<IUser>
   getUserById(id: string): Promise<IUser>
   getUsers(): Promise<IUser[]>
-  deleteByUserById(): Promise<IUser>
+  deleteByUserById(id: string): Promise<void>
 }
 
 export const userSchema = new Schema<IUser, IUserModel>(
