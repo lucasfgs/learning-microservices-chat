@@ -1,7 +1,14 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Model, Schema } from 'mongoose'
 import { v4 as uuid } from 'uuid'
 
 import { RepositoryError } from '@application/errors/RepositoryError'
+import { IChatMessage } from '@domain/models/IChatMessage'
+
+interface IChatMessageModel extends Model<IChatMessage> {
+  createPostInChatRoom(roomId: string, message: string, postedByUser: string): Promise<any>
+  // getChatRoomsByUserId(userId: string): Promise<IChatRoom[]>
+  // getChatRoomByRoomId(roomId: string): Promise<IChatRoom[]>
+}
 
 export const readByRecipientSchema = new Schema(
   {
@@ -17,7 +24,7 @@ export const readByRecipientSchema = new Schema(
   }
 )
 
-export const chatMessageSchema = new Schema(
+export const chatMessageSchema = new Schema<undefined, IChatMessageModel>(
   {
     _id: {
       type: String,

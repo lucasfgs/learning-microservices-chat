@@ -2,8 +2,8 @@ import { GenericCreatedResponse } from '@presentation/responses/GenericCreatedRe
 import { ChatRoomModel } from '@infra/database/mongoose/schemas/ChatRoom'
 import { IChatRoom } from '@domain/models/IChatRoom'
 import { IdParamValidation } from '@application/validation/common/leaf/IdParamValidation'
-import { FindChatRoomByUserIdUseCase } from '@application/useCases/chatRoom/FindChatRoomByUserIdUseCase'
-import { FindChatRoomByUserIdController } from '@presentation/controllers/chatRoom/FindChatRoomByUserIdController'
+import { FindChatRoomByUserIdUseCase } from '@application/useCases/room/FindChatRoomByUserIdUseCase'
+import { FindChatRoomByUserIdController } from '@presentation/controllers/room/FindChatRoomByUserIdController'
 
 export const findChatRoomByUserIdFactory = () => {
   const validation = new IdParamValidation<string>()

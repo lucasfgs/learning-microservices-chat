@@ -1,6 +1,6 @@
 import { ValidationComposite } from '@application/protocols/validation/ValidationComposite'
 import { TInitiateChatRoom, TInitiateChatRoomResponse } from '@domain/models/IChatRoom'
-import { IInitiateChatRoomUseCase } from '@domain/useCases/chatRoom/IInitiateChatRoomUseCase'
+import { IInitiateChatRoomUseCase } from '@domain/useCases/room/IInitiateChatRoomUseCase'
 import { ChatRoomModel } from '@infra/database/mongoose/schemas/ChatRoom'
 
 export class InitiateChatRoomUseCase implements IInitiateChatRoomUseCase {

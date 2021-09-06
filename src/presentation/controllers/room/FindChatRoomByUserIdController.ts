@@ -3,7 +3,7 @@ import { RequestValidationError } from '@application/errors/RequestValidationErr
 import { Controller } from '@application/protocols/controllers/Controller'
 import { HttpResponse, HttpResponseHandler } from '@application/protocols/requests/Http'
 import { IChatRoom } from '@domain/models/IChatRoom'
-import { IFindChatRoomByUserIdUseCase } from '@domain/useCases/chatRoom/IFindChatRoomByUserId'
+import { IFindChatRoomByUserIdUseCase } from '@domain/useCases/room/IFindChatRoomByUserId'
 import { TGenericRequestParam } from '@application/protocols/requests/GenericRequestParam'
 
 export class FindChatRoomByUserIdController implements Controller {

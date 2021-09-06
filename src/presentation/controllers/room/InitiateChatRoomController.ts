@@ -3,7 +3,7 @@ import { RequestValidationError } from '@application/errors/RequestValidationErr
 import { Controller } from '@application/protocols/controllers/Controller'
 import { HttpRequest, HttpResponse, HttpResponseHandler } from '@application/protocols/requests/Http'
 import { TInitiateChatRoom, TInitiateChatRoomResponse } from '@domain/models/IChatRoom'
-import { IInitiateChatRoomUseCase } from '@domain/useCases/chatRoom/IInitiateChatRoomUseCase'
+import { IInitiateChatRoomUseCase } from '@domain/useCases/room/IInitiateChatRoomUseCase'
 
 export class InitiateChatRoomController implements Controller {
   constructor (private readonly useCase: IInitiateChatRoomUseCase, private readonly presenter: HttpResponseHandler<TInitiateChatRoomResponse>) {

@@ -1,6 +1,6 @@
 import { ValidationComposite } from '@application/protocols/validation/ValidationComposite'
 import { IChatRoom } from '@domain/models/IChatRoom'
-import { IFindChatRoomByUserIdUseCase } from '@domain/useCases/chatRoom/IFindChatRoomByUserId'
+import { IFindChatRoomByUserIdUseCase } from '@domain/useCases/room/IFindChatRoomByUserId'
 import { ChatRoomModel } from '@infra/database/mongoose/schemas/ChatRoom'
 
 export class FindChatRoomByUserIdUseCase implements IFindChatRoomByUserIdUseCase {

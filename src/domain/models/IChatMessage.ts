@@ -1,6 +1,6 @@
 export interface IReadByRecipient {
     _id: false,
-    readByUserId: String,
+    readByUserId: string,
     readAt: Date,
 }
 
@@ -13,8 +13,4 @@ export interface IChatMessage {
 
 }
 
-export interface ICreateChatMessage {
-    room: string,
-    message: string,
-    postedByUser: string,
-}
+export type TCreateChatMessage = Pick<IChatMessage, 'room' | 'message' | 'postedByUser'>
