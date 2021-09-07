@@ -9,7 +9,9 @@ export class InitiateChatRoomValidation extends ValidationComposite<TInitiateCha
     const error = new RequestValidationError('Invalid request')
     if (!request) throw error
 
-    const { chatInitiator, userIds } = request
+    const { name, chatInitiator, userIds } = request
+
+    if (!isString(name)) { error.messages.push('Invalid field: name') }
 
     if (!isString(chatInitiator)) { error.messages.push('Invalid field: chatInitiator') }
 

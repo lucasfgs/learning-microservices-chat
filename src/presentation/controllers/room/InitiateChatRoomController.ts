@@ -22,6 +22,7 @@ export class InitiateChatRoomController implements Controller {
   private validateRequest (request: HttpRequest<TInitiateChatRoom>) {
     if (
       !objectKeyExists(request, 'body') ||
+      !objectKeyExists(request.body, 'name') ||
       !objectKeyExists(request.body, 'userIds') ||
       !objectKeyExists(request.body, 'chatInitiator')
     ) {

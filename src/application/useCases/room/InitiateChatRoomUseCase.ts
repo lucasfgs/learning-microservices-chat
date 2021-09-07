@@ -14,6 +14,6 @@ export class InitiateChatRoomUseCase implements IInitiateChatRoomUseCase {
 
     const allUserIds = [...request.userIds, request.chatInitiator]
 
-    return await this.repository.initiateChat(allUserIds, request.chatInitiator)
+    return await this.repository.initiateChat(request.name, allUserIds, request.chatInitiator)
   }
 }

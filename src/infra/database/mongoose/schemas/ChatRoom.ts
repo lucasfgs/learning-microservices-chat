@@ -5,7 +5,7 @@ import mongoose, { Model, Schema } from 'mongoose'
 import { v4 as uuid } from 'uuid'
 
 interface IChatRoomModel extends Model<IChatRoom> {
-  initiateChat(userIds: string[], chatInitiator: string): Promise<TInitiateChatRoomResponse>
+  initiateChat(name: string, userIds: string[], chatInitiator: string): Promise<TInitiateChatRoomResponse>
   getChatRoomsByUserId(userId: string): Promise<IChatRoom[]>
   getChatRoomByRoomId(roomId: string): Promise<IChatRoom[]>
 }
@@ -16,6 +16,7 @@ export const chatRoomSchema = new Schema<IChatRoom, IChatRoomModel>(
       type: String,
       default: () => uuid().replace(/-/g, '')
     },
+    name: String,
     userIds: Array,
     type: String,
     chatInitiator: String
@@ -56,7 +57,7 @@ chatRoomSchema.statics.getChatRoomByRoomId = async function (roomId) {
  * @param {Array} userIds - array of strings of userIds
  * @param {String} chatInitiator - user who initiated the chat
  */
-chatRoomSchema.statics.initiateChat = async function (userIds, chatInitiator) {
+chatRoomSchema.statics.initiateChat = async function (name, userIds, chatInitiator) {
   try {
     const availableRoom = await this.findOne({
       userIds: {
@@ -72,9 +73,10 @@ chatRoomSchema.statics.initiateChat = async function (userIds, chatInitiator) {
       }
     }
 
-    const newRoom = await this.create({ userIds, chatInitiator })
+    const newRoom = await this.create({ name, userIds, chatInitiator })
     return {
       isNew: true,
+      name: newRoom.name,
       message: 'creating a new chatroom',
       chatRoomId: newRoom._id
     }
