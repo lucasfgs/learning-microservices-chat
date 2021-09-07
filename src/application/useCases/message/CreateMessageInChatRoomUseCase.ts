@@ -1,3 +1,4 @@
+import { BadRequestError } from '@application/errors/BadRequestError'
 import { NotFoundError } from '@application/errors/NotFoundError'
 import { ValidationComposite } from '@application/protocols/validation/ValidationComposite'
 import { TCreateChatMessage } from '@domain/models/IChatMessage'
@@ -21,9 +22,11 @@ export class CreateMessageInChatRoomUseCase implements ICreateMessageInChatRoomU
 
     const user = await this.userRepository.findById(postedByUser)
 
+    if (!data) throw new BadRequestError('User not assigned to room')
+
     if (!user) throw new NotFoundError('User does not exists')
 
-    global.io.sockets.emit('new message', { message, room, user: postedByUser, name: user.name, createdAt: data.createdAt })
+    global.io.sockets.in(room).emit('new message', { message, room, user: postedByUser, name: user.name, createdAt: data.createdAt })
 
     return data
   }
