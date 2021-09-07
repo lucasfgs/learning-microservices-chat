@@ -14,10 +14,10 @@ export class CreateMessageInChatRoomUseCase implements ICreateMessageInChatRoomU
 
     const { message, postedByUser, room } = request
 
-    const resp = await this.repository.createPostInChatRoom(room, message, postedByUser)
+    const data = await this.repository.createPostInChatRoom(room, message, postedByUser)
 
-    global.io.sockets.in(request.room).emit('new message', { message, user: postedByUser })
+    global.io.sockets.in(room).emit('new message', { message, user: postedByUser })
 
-    return resp
+    return data
   }
 }

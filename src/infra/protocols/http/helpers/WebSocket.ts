@@ -2,10 +2,11 @@
 class WebSockets {
     private users = [];
 
-    connection (client) {
+    connection = (client) => {
+      console.log(`New client: ${client.id}`)
       // event fired when the chat room is disconnected
       client.on('disconnect', () => {
-        // this.users = this.users.filter((user) => user.socketId !== client.id)
+        this.users = this.users.filter((user) => user.socketId !== client.id)
       })
       // add identity of user mapped to the socket id
       client.on('identity', (userId) => {
@@ -25,7 +26,7 @@ class WebSockets {
       })
     }
 
-    subscribeOtherUser (room, otherUserId) {
+    subscribeOtherUser = (room, otherUserId) => {
       const userSockets = this.users.filter(
         (user) => user.userId === otherUserId
       )
