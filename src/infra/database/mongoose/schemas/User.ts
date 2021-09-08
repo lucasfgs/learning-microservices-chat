@@ -6,7 +6,7 @@ import { RepositoryError } from '@application/errors/RepositoryError'
 import { IUser } from '@domain/models/IUser'
 
 interface IUserModel extends Model<IUser> {
-  createUser(name: string): Promise<IUser>
+  createUser(name: string, userId: string): Promise<IUser>
   getUserById(id: string): Promise<IUser>
   getUsers(): Promise<IUser[]>
   deleteByUserById(id: string): Promise<void>
@@ -15,9 +15,9 @@ interface IUserModel extends Model<IUser> {
 export const userSchema = new Schema<IUser, IUserModel>(
   {
     _id: {
-      type: String,
-      default: () => uuid().replace(/-/g, '')
+      type: String
     },
+    userId: String,
     name: String
   },
   {
@@ -31,10 +31,9 @@ export const userSchema = new Schema<IUser, IUserModel>(
  * @param {String} lastName
  * @returns {Object} new user object created
  */
-userSchema.statics.createUser = async function (name) {
+userSchema.statics.createUser = async function (name, userId) {
   try {
-    const user = await this.create({ name })
-    return user
+    return await this.create({ _id: userId, name })
   } catch (error) {
     throw new RepositoryError('Could not create user')
   }

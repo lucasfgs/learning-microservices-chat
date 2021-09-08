@@ -1,5 +1,5 @@
-import { IUser } from '@domain/models/IUser'
+import { IUser, TCreateUser } from '@domain/models/IUser'
 
 export interface ICreateUserUseCase {
-    create(name: String): Promise<IUser>
+    create(request: TCreateUser): Promise<IUser>
 }

@@ -1,5 +1,8 @@
 
 export interface IUser {
     _id?: string,
-    name: String
+    name: string,
+    userId: string
 }
+
+export type TCreateUser = Omit<IUser, '_id'>
