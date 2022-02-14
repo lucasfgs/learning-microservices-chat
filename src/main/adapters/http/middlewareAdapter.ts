@@ -14,6 +14,7 @@ export const middlewareAdapter = (middleware: Middleware, permission?: string, r
       }, permission, role)
     )
       .then(() => {
+        console.log('test')
         return next()
       })
       .catch((error: DefaultApplicationError) => {
